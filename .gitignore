@@ -1,0 +1,6 @@
+bin
+bin/*
+*.o
+*.so
+lib/*
+*.v
