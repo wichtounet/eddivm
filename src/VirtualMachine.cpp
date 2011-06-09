@@ -35,6 +35,13 @@ int VirtualMachine::run(string file){
 }
 
 int VirtualMachine::runFile(ifstream* stream){
+	int header = readHeader(stream);
+
+	if(header != ('E' + 'D' + 'D' + 'I')){
+		cout << "Not an EDDI compiled file" << endl;
+		return 1;
+	}
+
 	Stack stack;
 
 	while(!stream->eof()){
