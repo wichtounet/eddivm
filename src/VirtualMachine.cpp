@@ -41,17 +41,17 @@ int VirtualMachine::runFile(ifstream* stream){
 		ByteCode bytecode = readByteCode(stream);
 		
 		switch(bytecode){
-			case PUSH :
-				char type;
-				binary_read(stream, type);
+			case PUSH:{
+				char type = readConstantType(stream);
 
 				if(type == 'S'){
-					string litteral = binary_read_string(stream);
+					string litteral = readLitteral(stream);
 
 					stack.push(litteral);
 				}
 
 				break;
+			}
 			case PRINT:
 				cout << stack.pop() << endl;
 				break;
