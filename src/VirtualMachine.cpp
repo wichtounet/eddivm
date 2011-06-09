@@ -6,6 +6,7 @@
 #include <commons/Timer.h>
 
 #include "VirtualMachine.h"
+#include "Stack.h"
 
 using namespace std;
 
@@ -15,7 +16,8 @@ int VirtualMachine::run(string file){
 	Timer timer;
 
 	ifstream inFile;
-	inFile.open(file.c_str());
+	inFile.open(file.c_str(), ios::binary);
+	inFile.unsetf(ios_base::skipws);
 
 	if(!inFile){
 		cout << "Unable to open " << file << endl;
@@ -32,7 +34,31 @@ int VirtualMachine::run(string file){
 	return code;
 }
 
-int VirtualMachine::runFile(ifstream* inStream){
-	
+int VirtualMachine::runFile(ifstream* stream){
+	Stack stack;
+
+	while(!stream->eof()){
+		ByteCode bytecode = readByteCode(stream);
+		
+		switch(bytecode){
+			case PUSH :
+				char type;
+				binary_read(stream, type);
+
+				if(type == 'S'){
+					string litteral = binary_read_string(stream);
+
+					stack.push(litteral);
+				}
+
+				break;
+			case PRINT:
+				cout << stack.pop() << endl;
+				break;
+			case END:
+				return 0;
+		}
+	}
+
 	return 0;
 }
