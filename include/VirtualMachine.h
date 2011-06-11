@@ -5,11 +5,13 @@
 #include <iomanip>
 #include <fstream>
 
+#include "ByteCodeFileReader.h"
+
 class VirtualMachine {
   public:
     int run (std::string file);
   private:
-    int runFile (std::ifstream* inStream);
+    int runFile (ByteCodeFileReader* inStream);
 };
 
 #endif

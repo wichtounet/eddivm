@@ -2,9 +2,9 @@
 #include <iomanip>
 #include <fstream>
 
-#include <commons/ByteCode.h>
 #include <commons/Timer.h>
 
+#include "ByteCodeFileReader.h"
 #include "VirtualMachine.h"
 #include "Stack.h"
 
@@ -15,27 +15,25 @@ int VirtualMachine::run(string file){
 
 	Timer timer;
 
-	ifstream inFile;
-	inFile.open(file.c_str(), ios::binary);
-	inFile.unsetf(ios_base::skipws);
+	ByteCodeFileReader reader(file);
 
-	if(!inFile){
+	if(reader.isNotOpen()){
 		cout << "Unable to open " << file << endl;
 		
 		return 1;
 	}
 
-	int code = runFile(&inFile);
+	int code = runFile(&reader);
 
 	cout << "Run took " << timer.elapsed() << "ms" << endl;
 
-	inFile.close();
+	reader.close();
 	
 	return code;
 }
 
-int VirtualMachine::runFile(ifstream* stream){
-	int header = readHeader(stream);
+int VirtualMachine::runFile(ByteCodeFileReader* reader){
+	int header = reader->readHeader();
 
 	if(header != ('E' + 'D' + 'D' + 'I')){
 		cout << "Not an EDDI compiled file" << endl;
@@ -44,15 +42,15 @@ int VirtualMachine::runFile(ifstream* stream){
 
 	Stack stack;
 
-	while(!stream->eof()){
-		ByteCode bytecode = readByteCode(stream);
+	while(reader->hasMore()){
+		ByteCode bytecode = reader->readByteCode();
 		
 		switch(bytecode){
 			case PUSH:{
-				char type = readConstantType(stream);
+				char type = reader->readConstantType();
 
 				if(type == 'S'){
-					string litteral = readLitteral(stream);
+					string litteral = reader->readLitteral();
 
 					stack.push(litteral);
 				}
