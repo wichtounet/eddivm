@@ -31,7 +31,7 @@ int VirtualMachine::run(string file){
 		return 1;
 	}
 
-	int code = runFile(&reader);
+	int code = runFile(reader);
 
 	cout << "Run took " << timer.elapsed() << "ms" << endl;
 
@@ -41,7 +41,7 @@ int VirtualMachine::run(string file){
 }
 
 int VirtualMachine::runFile(ByteCodeFileReader& reader){
-	int header = reader->readHeader();
+	int header = reader.readHeader();
 
 	if(header != ('E' + 'D' + 'D' + 'I')){
 		cout << "Not an EDDI compiled file" << endl;
@@ -51,7 +51,7 @@ int VirtualMachine::runFile(ByteCodeFileReader& reader){
 	Stack stack;
 	Variables variables;
 
-	while(reader->hasMore()){
+	while(reader.hasMore()){
 		ByteCode bytecode = reader.readByteCode();
 		
 		switch(bytecode){
