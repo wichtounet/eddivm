@@ -14,21 +14,19 @@
 
 #include <commons/ByteCode.h>
 
-using namespace std;
-
 class ByteCodeFileReader {
   public:
-	ByteCodeFileReader(string path);
+	ByteCodeFileReader(std::string path);
 	ByteCode readByteCode();
 	unsigned int readVariable();
 	char readConstantType();
-	string readLitteral();
+	std::string readLitteral();
 	int readHeader();
 	void close();
 	bool isNotOpen();
 	bool hasMore();
   private:
-    ifstream stream;
+    std::ifstream stream;
 };
 
 #endif
