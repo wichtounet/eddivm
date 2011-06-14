@@ -9,8 +9,6 @@
 #define STACK_H
 
 #include <iostream>
-#include <iomanip>
-#include <fstream>
 #include <stack>
 #include <vector>
 

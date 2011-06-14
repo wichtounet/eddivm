@@ -5,18 +5,15 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-
 #include <commons/Timer.h>
 
-#include "ByteCodeFileReader.h"
 #include "VirtualMachine.h"
 #include "Stack.h"
 #include "Variables.h"
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
 
 int VirtualMachine::run(string file){
 	cout << "Run " << file << endl;

@@ -5,17 +5,13 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-
 #include <commons/IO.h>
-#include <commons/ByteCode.h>
-#include <commons/Timer.h>
 
 #include "ByteCodeFileReader.h"
 
-using namespace std;
+using std::string;
+using std::ios;
+using std::ios_base;
 
 ByteCodeFileReader::ByteCodeFileReader(string path){
 	stream.open(path.c_str(), ios::binary);

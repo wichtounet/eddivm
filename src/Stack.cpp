@@ -5,19 +5,16 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <stack>
-
 #include "Stack.h"
 
-void Stack::push(std::string value){
+using std::string;
+
+void Stack::push(string value){
 	stack.push(value);
 }
 
-std::string Stack::pop(){
-	std::string value = stack.top();
+string Stack::pop(){
+	string value = stack.top();
 	stack.pop();
 	return value;
 }

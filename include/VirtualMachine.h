@@ -9,8 +9,6 @@
 #define VIRTUAL_MACHINE_H
 
 #include <iostream>
-#include <iomanip>
-#include <fstream>
 
 #include "ByteCodeFileReader.h"
 

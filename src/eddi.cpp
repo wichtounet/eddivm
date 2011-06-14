@@ -5,12 +5,10 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#include <iostream>
-#include <iomanip>
-
 #include "VirtualMachine.h"
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 int main(int argc, const char* argv[]) {
 	if(argc == 1){

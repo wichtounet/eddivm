@@ -8,8 +8,6 @@
 #ifndef BYTECODE_FILE_READER_H
 #define BYTECODE_FILE_READER_H
 
-#include <iostream>
-#include <iomanip>
 #include <fstream>
 
 #include <commons/ByteCode.h>

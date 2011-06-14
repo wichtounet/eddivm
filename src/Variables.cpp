@@ -5,14 +5,11 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <map>
-
 #include "Variables.h"
 
-void Variables::assign(unsigned int variable, std::string value){
+using std::string;
+
+void Variables::assign(unsigned int variable, string value){
 	variables[variable] = value;
 }
 
