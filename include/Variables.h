@@ -5,30 +5,20 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#ifndef BYTECODE_FILE_READER_H
-#define BYTECODE_FILE_READER_H
+#ifndef VARIABLES_H
+#define VARIABLES_H
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <map>
 
-#include <commons/ByteCode.h>
-
-using namespace std;
-
-class ByteCodeFileReader {
-  public:
-	ByteCodeFileReader(string path);
-	ByteCode readByteCode();
-	unsigned int readVariable();
-	char readConstantType();
-	string readLitteral();
-	int readHeader();
-	void close();
-	bool isNotOpen();
-	bool hasMore();
-  private:
-    ifstream stream;
+class Variables {
+	public:
+	void assign(unsigned int variable, std::string value);
+	std::string get(unsigned int variable); 
+	private:
+	std::map<unsigned int, std::string> variables;
 };
 
 #endif

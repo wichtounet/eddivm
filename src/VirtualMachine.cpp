@@ -14,6 +14,7 @@
 #include "ByteCodeFileReader.h"
 #include "VirtualMachine.h"
 #include "Stack.h"
+#include "Variables.h"
 
 using namespace std;
 
@@ -48,12 +49,13 @@ int VirtualMachine::runFile(ByteCodeFileReader* reader){
 	}
 
 	Stack stack;
+	Variables variables;
 
 	while(reader->hasMore()){
 		ByteCode bytecode = reader->readByteCode();
 		
 		switch(bytecode){
-			case PUSH:{
+			case PUSHS:{
 				char type = reader->readConstantType();
 
 				if(type == 'S'){
@@ -64,6 +66,20 @@ int VirtualMachine::runFile(ByteCodeFileReader* reader){
 
 				break;
 			}
+			case PUSHV:{
+				int variable = reader->readVariable();
+
+				stack.push(variables.get(variable));
+
+				break;
+			}
+			case ASSIGN:{
+				int variable = reader->readVariable();
+
+				variables.assign(variable, stack.pop());
+
+				break;
+			}
 			case PRINT:
 				cout << stack.pop() << endl;
 				break;
@@ -71,6 +87,8 @@ int VirtualMachine::runFile(ByteCodeFileReader* reader){
 				return 0;
 		}
 	}
+
+	cout << "Unexpected end of file" << endl;
 
 	return 0;
 }

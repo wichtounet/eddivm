@@ -5,20 +5,17 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#ifndef BYTECODE_H
-#define BYTECODE_H
-
 #include <iostream>
 #include <iomanip>
+#include <fstream>
+#include <map>
 
-using namespace std;
+#include "Variables.h"
 
-enum ByteCode {
-	PUSHS = 0,
-	PRINT = 1,
-	END = 2,
-	PUSHV = 3,
-	ASSIGN = 4
-};
+void Variables::assign(unsigned int variable, std::string value){
+	variables[variable] = value;
+}
 
-#endif
+std::string Variables::get(unsigned int variable){
+	return variables[variable];
+}

@@ -42,6 +42,12 @@ int ByteCodeFileReader::readHeader(){
 	return header;
 }
 
+unsigned int ByteCodeFileReader::readVariable(){
+	unsigned int variable;
+	binary_read(&stream, variable);
+	return variable;
+}
+
 char ByteCodeFileReader::readConstantType(){
 	char type;
 	binary_read(&stream, type);
