@@ -18,7 +18,7 @@ class VirtualMachine {
   public:
     int run (std::string file);
   private:
-    int runFile (ByteCodeFileReader* inStream);
+    int runFile (ByteCodeFileReader& inStream);
 };
 
 #endif

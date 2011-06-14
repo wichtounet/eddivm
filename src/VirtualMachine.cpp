@@ -40,7 +40,7 @@ int VirtualMachine::run(string file){
 	return code;
 }
 
-int VirtualMachine::runFile(ByteCodeFileReader* reader){
+int VirtualMachine::runFile(ByteCodeFileReader& reader){
 	int header = reader->readHeader();
 
 	if(header != ('E' + 'D' + 'D' + 'I')){
@@ -52,14 +52,14 @@ int VirtualMachine::runFile(ByteCodeFileReader* reader){
 	Variables variables;
 
 	while(reader->hasMore()){
-		ByteCode bytecode = reader->readByteCode();
+		ByteCode bytecode = reader.readByteCode();
 		
 		switch(bytecode){
 			case PUSHS:{
-				char type = reader->readConstantType();
+				char type = reader.readConstantType();
 
 				if(type == 'S'){
-					string litteral = reader->readLitteral();
+					string litteral = reader.readLitteral();
 
 					stack.push(litteral);
 				}
@@ -67,14 +67,14 @@ int VirtualMachine::runFile(ByteCodeFileReader* reader){
 				break;
 			}
 			case PUSHV:{
-				int variable = reader->readVariable();
+				int variable = reader.readVariable();
 
 				stack.push(variables.get(variable));
 
 				break;
 			}
 			case ASSIGN:{
-				int variable = reader->readVariable();
+				int variable = reader.readVariable();
 
 				variables.assign(variable, stack.pop());
 
