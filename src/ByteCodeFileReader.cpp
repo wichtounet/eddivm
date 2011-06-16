@@ -51,7 +51,7 @@ char ByteCodeFileReader::readConstantType(){
 }
 
 string ByteCodeFileReader::readLitteral(){
-	size_t size;
+	string:size_type size;
 	binary_read(&stream, size);
 	
 	char* buffer = new char[size + 1];
