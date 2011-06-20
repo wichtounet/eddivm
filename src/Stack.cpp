@@ -7,14 +7,12 @@
 
 #include "Stack.h"
 
-using std::string;
-
-void Stack::push(string value){
+void Stack::push(int value){
 	stack.push(value);
 }
 
-string Stack::pop(){
-	string value = stack.top();
+int Stack::pop(){
+	int value = stack.top();
 	stack.pop();
 	return value;
 }

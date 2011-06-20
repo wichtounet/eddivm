@@ -8,16 +8,15 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include <iostream>
 #include <stack>
 #include <vector>
 
 class Stack {
 	public:
-	void push(std::string value);
-	std::string pop();
+	void push(int value);
+	int pop();
 	private:
-	std::stack<std::string, std::vector<std::string> > stack;
+	std::stack<int, std::vector<int> > stack;
 };
 
 #endif

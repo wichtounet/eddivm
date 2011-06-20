@@ -5,17 +5,12 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#ifndef VARIABLES_H
-#define VARIABLES_H
+#ifndef TYPES_H
+#define TYPES_H
 
-#include <map>
-
-class Variables {
-	public:
-	void assign(unsigned int variable, int value);
-	int get(unsigned int variable); 
-	private:
-	std::map<unsigned int, int> variables;
+enum Type {
+	STRING = 0, 
+	INT = 1
 };
 
 #endif

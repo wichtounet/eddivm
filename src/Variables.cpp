@@ -7,12 +7,10 @@
 
 #include "Variables.h"
 
-using std::string;
-
-void Variables::assign(unsigned int variable, string value){
+void Variables::assign(unsigned int variable, int value){
 	variables[variable] = value;
 }
 
-std::string Variables::get(unsigned int variable){
+int Variables::get(unsigned int variable){
 	return variables[variable];
 }

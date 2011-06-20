@@ -5,17 +5,18 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#ifndef VARIABLES_H
-#define VARIABLES_H
+#ifndef STRING_POOL_H
+#define STRING_POOL_H
 
+#include <string>
 #include <map>
 
-class Variables {
+class StringPool {
 	public:
-	void assign(unsigned int variable, int value);
-	int get(unsigned int variable); 
+		void add(int index, std::string value);
+		std::string get(int index);
 	private:
-	std::map<unsigned int, int> variables;
+		std::map<int, std::string> strings;
 };
 
 #endif

@@ -3,8 +3,8 @@ DEBUG = -g
 CFLAGS = -Wall -o2 -c $(DEBUG) -Iinclude 
 LFLAGS = -Wall $(DEBUG) -leddi-commons 
 
-bin/eddivm : bin/eddi.o bin/VirtualMachine.o bin/Stack.o bin/ByteCodeFileReader.o bin/Variables.o
-	$(CC) $(LFLAGS) -o bin/eddivm bin/eddi.o bin/VirtualMachine.o  bin/Stack.o bin/ByteCodeFileReader.o bin/Variables.o
+bin/eddivm : bin/eddi.o bin/VirtualMachine.o bin/Stack.o bin/ByteCodeFileReader.o bin/Variables.o bin/StringPool.o
+	$(CC) $(LFLAGS) -o bin/eddivm bin/eddi.o bin/VirtualMachine.o  bin/Stack.o bin/ByteCodeFileReader.o bin/Variables.o bin/StringPool.o
 
 bin/eddi.o : src/eddi.cpp include/VirtualMachine.h
 	$(CC) $(CFLAGS) -o bin/eddi.o src/eddi.cpp
@@ -20,6 +20,9 @@ bin/Variables.o : include/Variables.h src/Variables.cpp
 
 bin/ByteCodeFileReader.o : include/ByteCodeFileReader.h src/ByteCodeFileReader.cpp
 	$(CC) $(CFLAGS) -o bin/ByteCodeFileReader.o src/ByteCodeFileReader.cpp
+
+bin/StringPool.o : include/StringPool.h src/StringPool.cpp
+	$(CC) $(CFLAGS) -o bin/StringPool.o src/StringPool.cpp
 
 clean:
 	rm -f bin/*

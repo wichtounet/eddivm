@@ -44,6 +44,12 @@ unsigned int ByteCodeFileReader::readVariable(){
 	return variable;
 }
 
+int ByteCodeFileReader::readInt(){
+	int variable;
+	binary_read(&stream, variable);
+	return variable;
+}
+
 char ByteCodeFileReader::readConstantType(){
 	char type;
 	binary_read(&stream, type);
@@ -51,7 +57,7 @@ char ByteCodeFileReader::readConstantType(){
 }
 
 string ByteCodeFileReader::readLitteral(){
-	string:size_type size;
+	string::size_type size;
 	binary_read(&stream, size);
 	
 	char* buffer = new char[size + 1];

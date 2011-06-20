@@ -10,6 +10,7 @@
 #include "VirtualMachine.h"
 #include "Stack.h"
 #include "Variables.h"
+#include "StringPool.h"
 
 using std::cout;
 using std::endl;
@@ -45,6 +46,17 @@ int VirtualMachine::runFile(ByteCodeFileReader& reader){
 		return 1;
 	}
 
+	StringPool pool;
+
+	int strings = reader.readInt();
+
+	for(int i = 0; i < strings; i++){
+		int index = reader.readInt();
+		string value = reader.readLitteral();
+
+		pool.add(index, value);
+	}	
+
 	Stack stack;
 	Variables variables;
 
@@ -52,34 +64,34 @@ int VirtualMachine::runFile(ByteCodeFileReader& reader){
 		ByteCode bytecode = reader.readByteCode();
 		
 		switch(bytecode){
-			case PUSHS:{
-				char type = reader.readConstantType();
+			case LDCS:
+			case LDCI:{
+				int value = reader.readInt();
 
-				if(type == 'S'){
-					string litteral = reader.readLitteral();
-
-					stack.push(litteral);
-				}
+				stack.push(value);
 
 				break;
 			}
-			case PUSHV:{
-				int variable = reader.readVariable();
-
-				stack.push(variables.get(variable));
-
-				break;
-			}
-			case ASSIGN:{
-				int variable = reader.readVariable();
-
-				variables.assign(variable, stack.pop());
-
-				break;
-			}
-			case PRINT:
+			case PRINTI:
 				cout << stack.pop() << endl;
+
 				break;
+			case PRINTS:
+				cout << pool.get(stack.pop()) << endl;
+
+				break;
+			case SSTORE:
+			case ISTORE:{
+				unsigned int variable = reader.readVariable();
+				
+				variables.assign(variable, stack.pop());
+			}
+			case SLOAD:
+			case ILOAD:{
+				unsigned int variable = reader.readVariable();
+
+				stack.push(variables.get(variable));	
+			}
 			case END:
 				return 0;
 		}

@@ -20,6 +20,7 @@ class ByteCodeFileReader {
 	char readConstantType();
 	std::string readLitteral();
 	int readHeader();
+	int readInt();
 	void close();
 	bool isNotOpen();
 	bool hasMore();
