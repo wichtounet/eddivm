@@ -4,3 +4,5 @@ bin/*
 *.so
 lib/*
 *.v
+*.swp
+*.swo
