@@ -62,7 +62,7 @@ int VirtualMachine::runFile(ByteCodeFileReader& reader){
 
 	while(reader.hasMore()){
 		ByteCode bytecode = reader.readByteCode();
-		
+	
 		switch(bytecode){
 			case LDCS:
 			case LDCI:{
@@ -85,12 +85,16 @@ int VirtualMachine::runFile(ByteCodeFileReader& reader){
 				unsigned int variable = reader.readVariable();
 				
 				variables.assign(variable, stack.pop());
+				
+				break;
 			}
 			case SLOAD:
 			case ILOAD:{
 				unsigned int variable = reader.readVariable();
 
 				stack.push(variables.get(variable));	
+				
+				break;
 			}
 			case END:
 				return 0;
