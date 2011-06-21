@@ -14,6 +14,7 @@
 class StringPool {
 	public:
 		void add(int index, std::string value);
+		int addNew(std::string value);
 		std::string get(int index);
 	private:
 		std::map<int, std::string> strings;

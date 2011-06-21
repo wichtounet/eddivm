@@ -96,6 +96,24 @@ int VirtualMachine::runFile(ByteCodeFileReader& reader){
 				
 				break;
 			}
+			case IADD:{
+				int rhs = stack.pop();
+				int lhs = stack.pop();
+				
+				stack.push(rhs + lhs);
+				
+				break;
+			}
+			case SADD:{
+				string rhs = pool.get(stack.pop());
+				string lhs = pool.get(stack.pop());
+
+				int index = pool.addNew(lhs + rhs);	
+
+				stack.push(index);
+
+				break;
+			}
 			case END:
 				return 0;
 		}
