@@ -100,7 +100,39 @@ int VirtualMachine::runFile(ByteCodeFileReader& reader){
 				int rhs = stack.pop();
 				int lhs = stack.pop();
 				
-				stack.push(rhs + lhs);
+				stack.push(lhs + rhs);
+				
+				break;
+			}
+			case ISUB:{
+				int rhs = stack.pop();
+				int lhs = stack.pop();
+				
+				stack.push(lhs - rhs);
+				
+				break;
+			}
+			case IMUL:{
+				int rhs = stack.pop();
+				int lhs = stack.pop();
+				
+				stack.push(lhs * rhs);
+				
+				break;
+			}
+			case IDIV:{
+				int rhs = stack.pop();
+				int lhs = stack.pop();
+				
+				stack.push(lhs / rhs);
+				
+				break;
+			}
+			case IMOD:{
+				int rhs = stack.pop();
+				int lhs = stack.pop();
+				
+				stack.push(lhs % rhs);
 				
 				break;
 			}
