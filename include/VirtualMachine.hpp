@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-#include "ByteCodeFileReader.h"
+#include "ByteCodeFileReader.hpp"
 
 class VirtualMachine {
   public:

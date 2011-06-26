@@ -5,9 +5,9 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#include <commons/IO.h>
+#include <commons/IO.hpp>
 
-#include "ByteCodeFileReader.h"
+#include "ByteCodeFileReader.hpp"
 
 using std::string;
 using std::ios;

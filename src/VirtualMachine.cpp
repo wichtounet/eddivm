@@ -5,12 +5,12 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#include <commons/Timer.h>
+#include <commons/Timer.hpp>
 
-#include "VirtualMachine.h"
-#include "Stack.h"
-#include "Variables.h"
-#include "StringPool.h"
+#include "VirtualMachine.hpp"
+#include "Stack.hpp"
+#include "Variables.hpp"
+#include "StringPool.hpp"
 
 using std::cout;
 using std::endl;

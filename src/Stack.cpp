@@ -5,7 +5,7 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#include "Stack.h"
+#include "Stack.hpp"
 
 void Stack::push(int value){
 	stack.push(value);

@@ -10,7 +10,7 @@
 
 #include <fstream>
 
-#include <commons/ByteCode.h>
+#include <commons/ByteCode.hpp>
 
 class ByteCodeFileReader {
   public:
