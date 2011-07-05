@@ -1,5 +1,5 @@
 CC = g++
-DEBUG = -g
+DEBUG =
 CFLAGS = -Wall -o2 -c $(DEBUG) -Iinclude 
 LFLAGS = -Wall $(DEBUG) -leddi-commons 
 

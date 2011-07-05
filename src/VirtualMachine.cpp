@@ -15,6 +15,13 @@
 using std::cout;
 using std::endl;
 using std::string;
+using std::map;
+using std::vector;
+
+struct Instruction {
+	ByteCode bytecode;
+	int operand;
+};
 
 int VirtualMachine::run(string file){
 	cout << "Run " << file << endl;
@@ -50,28 +57,57 @@ int VirtualMachine::runFile(ByteCodeFileReader& reader){
 
 	int strings = reader.readInt();
 
+	cout << "String pool size = " << strings << endl;
+
 	for(int i = 0; i < strings; i++){
 		int index = reader.readInt();
 		string value = reader.readLitteral();
 
 		pool.add(index, value);
-	}	
+	}
+
+	vector<Instruction> instructions;
+	int current = 0;
+
+	map<int, int> branches;
+
+	while(reader.hasMore()){
+		ByteCode bytecode = reader.readByteCode();
+
+		if(bytecode == LABEL){
+			int branche = reader.readInt();
+
+			branches[branche] = current;
+		} else {
+			Instruction instruction;
+			instruction.bytecode = bytecode;
+	
+			if(instruction.bytecode > LABEL && instruction.bytecode <= JUMP_IF_NOT){
+				instruction.operand = reader.readInt();	
+			}
+
+			instructions.push_back(instruction);
+			++current;
+		}	
+	}
 
 	Stack stack;
 	Variables variables;
 
-	while(reader.hasMore()){
-		ByteCode bytecode = reader.readByteCode();
-	
+	int programCounter = 0;
+
+	while(true){
+		Instruction instruction = instructions[programCounter];
+		ByteCode bytecode = instruction.bytecode;
+		
+		programCounter++;
+
 		switch(bytecode){
 			case LDCS:
-			case LDCI:{
-				int value = reader.readInt();
-
-				stack.push(value);
+			case LDCI:
+				stack.push(instruction.operand);
 
 				break;
-			}
 			case PRINTI:
 				cout << stack.pop() << endl;
 
@@ -82,7 +118,7 @@ int VirtualMachine::runFile(ByteCodeFileReader& reader){
 				break;
 			case SSTORE:
 			case ISTORE:{
-				unsigned int variable = reader.readVariable();
+				unsigned int variable = (unsigned int) instruction.operand;
 				
 				variables.assign(variable, stack.pop());
 				
@@ -90,7 +126,7 @@ int VirtualMachine::runFile(ByteCodeFileReader& reader){
 			}
 			case SLOAD:
 			case ILOAD:{
-				unsigned int variable = reader.readVariable();
+				unsigned int variable = (unsigned int) instruction.operand;
 
 				stack.push(variables.get(variable));	
 				
@@ -146,12 +182,107 @@ int VirtualMachine::runFile(ByteCodeFileReader& reader){
 
 				break;
 			}
+			case JUMP: {
+				programCounter = branches[instruction.operand];
+		
+				break;
+			} 
+			case JUMP_IF: {
+				int result = stack.pop();
+
+				if(result == 1){
+					programCounter = branches[instruction.operand];
+				}
+		
+				break;
+			} 
+		 
+			case JUMP_IF_NOT: {
+				int result = stack.pop();
+
+				if(result == 0){
+					programCounter = branches[instruction.operand];
+				}
+		
+				break;
+			} 
+
+			case EQUALS: {
+				int rhs = stack.pop();
+				int lhs = stack.pop();
+
+				if(lhs == rhs){
+					stack.push(1);
+				} else {
+					stack.push(0);
+				}
+		
+				break;
+			} 
+			case NOT_EQUALS: {
+				int rhs = stack.pop();
+				int lhs = stack.pop();
+
+				if(lhs != rhs){
+					stack.push(1);
+				} else {
+					stack.push(0);
+				}
+		
+				break;
+			} 
+			case GREATER_THAN: {
+				int rhs = stack.pop();
+				int lhs = stack.pop();
+
+				if(lhs > rhs){
+					stack.push(1);
+				} else {
+					stack.push(0);
+				}
+		
+				break;
+			} 
+			case LESS_THAN: {
+				int rhs = stack.pop();
+				int lhs = stack.pop();
+
+				if(lhs < rhs){
+					stack.push(1);
+				} else {
+					stack.push(0);
+				}
+		
+				break;
+			} 
+			case GREATER_THAN_EQUALS: {
+				int rhs = stack.pop();
+				int lhs = stack.pop();
+
+				if(lhs >= rhs){
+					stack.push(1);
+				} else {
+					stack.push(0);
+				}
+		
+				break;
+			} 
+			case LESS_THAN_EQUALS: {
+				int rhs = stack.pop();
+				int lhs = stack.pop();
+
+				if(lhs <= rhs){
+					stack.push(1);
+				} else {
+					stack.push(0);
+				}
+		
+				break;
+			} 
 			case END:
 				return 0;
 		}
 	}
 
-	cout << "Unexpected end of file" << endl;
-
-	return 0;
+	return 1;
 }
